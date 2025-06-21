@@ -1,116 +1,106 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Pets</title>
+  <link rel="stylesheet" href="pet.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+          integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+          crossorigin="anonymous"></script>
+</head>
+<body>
 
-<html lang="en"> 
+<header>
+  <h1>Our Pets</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="pet.html">Pets</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Our Pets</title> 
-    <link rel="stylesheet" href="pet.css"> 
-</head> 
+<main>
+  <!-- Filter Checkboxes -->
+  <section>
+    <h2>Filter by Type</h2>
+    <label><input type="checkbox" name="pet-type" value="Dog" checked /> Dog</label>
+    <label><input type="checkbox" name="pet-type" value="Cat" checked /> Cat</label>
+    <label><input type="checkbox" name="pet-type" value="capybara" checked /> Capybara</label>
+    <label><input type="checkbox" name="pet-type" value="Bird" checked /> Bird</label>
+  </section>
 
-<body> 
+  <!-- Dynamic Pet List -->
+  <section class="pet-list" id="pet-list">
+    <!-- Pets will be inserted here -->
+  </section>
+</main>
 
-    <header> 
-        <h1>Our Pets</h1> 
-        <nav> 
-            <a href="index.html">Home</a> 
-            <a href="pet.html">Pets</a> 
-            <a href="contact.html">Contact</a> 
-        </nav> 
-    </header> 
+<footer>
+  <div class="footer-content">
+    <div class="footer-text">
+      <p>Contact us at: <strong>info@petstore.com</strong></p>
+    </div>
 
-    <main> 
-        <section class="pet-list"> 
-            <div class="pet"> 
-                <img src="dog01.jpg" alt="Cute Dog"> 
-                <p>Charlie - Golden Retriever</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.757578305562!2d100.8353415745324!3d13.611612686765781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d430e775155f9%3A0xf01923824353260!2sAssumption%20University%20Suvarnabhumi%20Campus!5e0!3m2!1sen!2sth!4v1749998686303!5m2!1sen!2sth"
+        width="400" height="300" style="border:0;" allowfullscreen=""
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</footer>
 
-            <div class="pet"> 
-                <img src="dog02.jpg" alt="Cute Dog"> 
-                <p>Charlie - Golden Retriever</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
+<!-- Script -->
+<script>
+const pets = [
+  { name: "Buddy", type: "Dog", age: 3, img: "dog01.jpg" },
+  { name: "Sam", type: "Dog", age: 3, img: "dog02.jpg" },
+  { name: "Bob", type: "Dog", age: 1, img: "dog03.jpg" },
+  { name: "Whiskers", type: "Cat", age: 2, img: "cat01.jpg" },
+  { name: "Mittens", type: "Cat", age: 2, img: "cat02.jpg" },
+  { name: "Kitty", type: "Cat", age: 1, img: "cat03.jpg" },
+  { name: "Bobo", type: "capybara", age: 4, img: "capybara01.jpg" },
+  { name: "Moo", type: "capybara", age: 1, img: "capybara02.jpg" },
+  { name: "Timpy", type: "Bird", age: 7, img: "bird01.jpg" },
+  { name: "Simpy", type: "Bird", age: 2, img: "bird02.jpg" },
+];
 
-            <div class="pet"> 
-                <img src="dog03.jpg" alt="Cute Dog"> 
-                <p>Charlie - Golden Retriever</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
+function adoptPet() {
+  alert("Thank you for adopting a pet!");
+}
 
-            <div class="pet"> 
-                <img src="cat01.jpg" alt="Cute Cat"> 
-                <p>Milo - British Shorthair</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
+function renderPets(petsToShow) {
+  const petList = $("#pet-list");
+  petList.empty();
 
-            <div class="pet"> 
-                <img src="cat02.jpg" alt="Cute Dog"> 
-                <p>Charlie - Golden Retriever</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
+  petsToShow.forEach(pet => {
+    const petItem = $(`
+      <div class="pet">
+        <img src="${pet.img}" alt="${pet.name}">
+        <p>${pet.name} - ${pet.type}</p>
+        <p>Age: ${pet.age} years</p>
+        <button onclick="adoptPet()">Adopt Now</button>
+      </div>
+    `);
+    petList.append(petItem);
+  });
+}
 
-            <div class="pet"> 
-                <img src="cat03.jpg" alt="Cute Cat"> 
-                <p>Milo - British Shorthair</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
+function filterPets() {
+  const selectedTypes = $('input[name="pet-type"]:checked').map(function () {
+    return $(this).val();
+  }).get();
 
-            <div class="pet"> 
-                <img src="capybara01.jpg" alt="Cute Cat"> 
-                <p>Milo - British Shorthair</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
+  const filtered = pets.filter(pet => selectedTypes.includes(pet.type));
+  renderPets(filtered);
+}
 
-            <div class="pet"> 
-                <img src="capybara02.jpg" alt="Cute Cat"> 
-                <p>Milo - British Shorthair</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
+$(document).ready(() => {
+  renderPets(pets);
+  $('input[name="pet-type"]').on('change', filterPets);
+});
+</script>
 
-            <div class="pet"> 
-                <img src="bird01.jpg" alt="Cute Cat"> 
-                <p>Milo - British Shorthair</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
-
-            <div class="pet"> 
-                <img src="bird02.jpg" alt="Cute Cat"> 
-                <p>Milo - British Shorthair</p> 
-                <button onclick="adoptPet()">Adopt Now</button> 
-            </div> 
-        </section> 
-    </main> 
-
-    <footer> 
-        <div class="footer-content">
-            <div class="footer-text">
-                <p>Contact us at: <strong>info@petstore.com</strong></p> 
-            </div>
-    
-            <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.757578305562!2d100.8353415745324!3d13.611612686765781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d430e775155f9%3A0xf01923824353260!2sAssumption%20University%20Suvarnabhumi%20Campus!5e0!3m2!1sen!2sth!4v1749998686303!5m2!1sen!2sth" 
-                    width="400" 
-                    height="300" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function adoptPet() {
-            alert("Thank you for adopting a pet!");
-        }
-    </script>
-
-
-</body> 
-
+</body>
 </html>
